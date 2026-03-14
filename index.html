@@ -9,81 +9,157 @@
     --text:#a0f0e8;--dim:#2a4a5a;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
-  #app{background:var(--bg);color:var(--text);font-family:'Share Tech Mono',monospace;min-height:100vh;padding:0;position:relative;overflow:hidden;}
+  #app{background:var(--bg);color:var(--text);font-family:'Share Tech Mono',monospace;min-height:100vh;position:relative;overflow:hidden;}
   #app::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,255,231,0.015) 2px,rgba(0,255,231,0.015) 4px);pointer-events:none;z-index:100;}
   #app::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,255,231,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,231,0.04) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0;}
-  .container{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:24px 20px;}
-  .header{text-align:center;margin-bottom:28px;}
-  .header-badge{display:inline-block;font-size:9px;letter-spacing:4px;color:var(--neon);border:1px solid var(--neon);padding:3px 12px;margin-bottom:10px;text-shadow:var(--glow);box-shadow:var(--glow);animation:pulse 3s ease-in-out infinite;}
+  .container{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:20px 16px;}
+  .header{text-align:center;margin-bottom:22px;}
+  .header-badge{display:inline-block;font-size:9px;letter-spacing:4px;color:var(--neon);border:1px solid var(--neon);padding:3px 12px;margin-bottom:8px;text-shadow:var(--glow);box-shadow:var(--glow);animation:pulse 3s ease-in-out infinite;}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.6}}
-  .header h1{font-family:'Orbitron',monospace;font-size:26px;font-weight:900;color:#fff;letter-spacing:6px;text-shadow:0 0 20px var(--neon),0 0 40px var(--neon);line-height:1.2;}
-  .header-sub{font-size:10px;letter-spacing:3px;color:var(--dim);margin-top:6px;}
-  .panel{background:var(--panel);border:1px solid var(--border);border-top:2px solid var(--neon);position:relative;margin-bottom:16px;box-shadow:0 0 30px rgba(0,255,231,0.05),inset 0 0 30px rgba(0,0,0,0.5);}
-  .panel.decrypt-panel{border-top-color:var(--neon4);}
+  .header h1{font-family:'Orbitron',monospace;font-size:24px;font-weight:900;color:#fff;letter-spacing:6px;text-shadow:0 0 20px var(--neon),0 0 40px var(--neon);}
+  .header-sub{font-size:10px;letter-spacing:3px;color:var(--dim);margin-top:4px;}
+  .panel{background:var(--panel);border:1px solid var(--border);border-top:2px solid var(--neon);position:relative;margin-bottom:14px;box-shadow:0 0 30px rgba(0,255,231,0.05),inset 0 0 30px rgba(0,0,0,0.5);}
+  .panel.dec{border-top-color:var(--neon4);}
   .panel-label{position:absolute;top:-1px;left:16px;font-size:8px;letter-spacing:3px;color:var(--neon);background:var(--panel);padding:0 8px;transform:translateY(-50%);text-shadow:var(--glow);}
-  .decrypt-panel .panel-label{color:var(--neon4);text-shadow:var(--glow4);}
-  .panel-body{padding:20px 18px 18px;}
+  .dec .panel-label{color:var(--neon4);text-shadow:var(--glow4);}
+  .panel-body{padding:18px 16px 16px;}
   .input-row{display:flex;gap:10px;align-items:stretch;}
-  textarea{flex:1;background:#020c14;border:1px solid var(--dim);color:var(--neon);font-family:'Share Tech Mono',monospace;font-size:14px;padding:12px 14px;resize:none;outline:none;height:70px;letter-spacing:2px;transition:border-color 0.2s,box-shadow 0.2s;caret-color:var(--neon);}
+  textarea{flex:1;background:#020c14;border:1px solid var(--dim);color:var(--neon);font-family:'Share Tech Mono',monospace;font-size:14px;padding:10px 12px;resize:none;outline:none;height:66px;letter-spacing:2px;transition:border-color 0.2s;caret-color:var(--neon);}
   textarea::placeholder{color:var(--dim);}
   textarea:focus{border-color:var(--neon);box-shadow:var(--glow);}
-  .btn{font-family:'Orbitron',monospace;font-size:9px;letter-spacing:2px;font-weight:700;padding:0 16px;height:31px;border:1px solid var(--neon);background:transparent;color:var(--neon);cursor:pointer;text-shadow:var(--glow);box-shadow:var(--glow);transition:all 0.15s;white-space:nowrap;}
-  .btn:hover{background:rgba(0,255,231,0.12);box-shadow:0 0 16px #00ffe7cc,0 0 40px #00ffe755;}
+  .btn{font-family:'Orbitron',monospace;font-size:9px;letter-spacing:2px;font-weight:700;padding:0 14px;height:30px;border:1px solid var(--neon);background:transparent;color:var(--neon);cursor:pointer;text-shadow:var(--glow);box-shadow:var(--glow);transition:all 0.15s;white-space:nowrap;}
+  .btn:hover{background:rgba(0,255,231,0.12);}
   .btn:active{transform:scale(0.97);}
   .btn-red{border-color:var(--neon2);color:var(--neon2);text-shadow:var(--glow2);box-shadow:var(--glow2);}
   .btn-red:hover{background:rgba(255,0,60,0.1);}
   .btn-yellow{border-color:var(--neon3);color:var(--neon3);text-shadow:var(--glow3);box-shadow:var(--glow3);}
   .btn-yellow:hover{background:rgba(255,230,0,0.08);}
-  .btn-purple{border-color:var(--neon4);color:var(--neon4);text-shadow:var(--glow4);box-shadow:var(--glow4);}
-  .btn-purple:hover{background:rgba(191,0,255,0.1);}
-  .btn-col{display:flex;flex-direction:column;gap:8px;}
-  #output-area,#decrypt-output-area{min-height:120px;background:#020c14;border:1px solid var(--dim);padding:16px;position:relative;overflow-x:auto;}
-  .output-placeholder{color:var(--dim);font-size:11px;letter-spacing:2px;text-align:center;padding-top:36px;}
-  .status-bar{display:flex;justify-content:space-between;align-items:center;padding:6px 18px;background:#020c14;border-top:1px solid var(--border);font-size:9px;letter-spacing:2px;color:var(--dim);flex-wrap:wrap;gap:6px;}
+  .btn-col{display:flex;flex-direction:column;gap:7px;}
+  .status-bar{display:flex;justify-content:space-between;align-items:center;padding:5px 16px;background:#020c14;border-top:1px solid var(--border);font-size:9px;letter-spacing:2px;color:var(--dim);flex-wrap:wrap;gap:6px;}
   .status-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--neon);margin-right:6px;box-shadow:var(--glow);animation:pulse 1.5s ease-in-out infinite;}
   .status-dot.purple{background:var(--neon4);box-shadow:var(--glow4);}
-  .figures-row{display:flex;flex-wrap:wrap;gap:4px;align-items:flex-end;padding:8px 0;}
-  .figure-cell{display:flex;flex-direction:column;align-items:center;gap:2px;position:relative;}
   .corner-tl,.corner-tr,.corner-bl,.corner-br{position:absolute;width:10px;height:10px;border-color:var(--neon);border-style:solid;opacity:0.7;}
-  .decrypt-panel .corner-tl,.decrypt-panel .corner-tr,.decrypt-panel .corner-bl,.decrypt-panel .corner-br{border-color:var(--neon4);}
+  .dec .corner-tl,.dec .corner-tr,.dec .corner-bl,.dec .corner-br{border-color:var(--neon4);}
   .corner-tl{top:4px;left:4px;border-width:1px 0 0 1px;}
   .corner-tr{top:4px;right:4px;border-width:1px 1px 0 0;}
   .corner-bl{bottom:4px;left:4px;border-width:0 0 1px 1px;}
   .corner-br{bottom:4px;right:4px;border-width:0 1px 1px 0;}
+  .figures-row{display:flex;flex-wrap:wrap;gap:6px;align-items:flex-end;padding:6px 0;}
+  .figure-cell{display:flex;flex-direction:column;align-items:center;position:relative;}
   .ref-strip{display:flex;flex-wrap:wrap;gap:3px;justify-content:center;}
   .ref-cell{display:flex;flex-direction:column;align-items:center;gap:1px;cursor:pointer;padding:3px;border:1px solid transparent;transition:border-color 0.15s;}
   .ref-cell:hover{border-color:var(--neon);background:rgba(0,255,231,0.05);}
   .ref-lbl{font-size:8px;color:var(--neon);font-family:'Share Tech Mono',monospace;letter-spacing:1px;}
-  @keyframes flicker{0%,100%{opacity:1}92%,96%{opacity:0.4}}
-  .glitch{animation:flicker 8s infinite;}
-  @keyframes fadeInUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-  @keyframes revealChar{0%{opacity:0;transform:scale(1.4)}60%{opacity:1;transform:scale(1.05)}100%{opacity:1;transform:scale(1)}}
-  @keyframes scanline{0%{top:-100%}100%{top:100%}}
-  .reveal-badge{position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-family:'Orbitron',monospace;font-size:11px;font-weight:700;color:var(--neon3);text-shadow:var(--glow3);opacity:0;white-space:nowrap;animation:revealChar 0.4s ease forwards;}
-  #decoded-sentence{font-family:'Orbitron',monospace;font-size:20px;font-weight:700;color:var(--neon3);text-shadow:var(--glow3);letter-spacing:5px;text-align:center;padding:16px 0 4px;word-break:break-all;min-height:48px;}
-  #drop-zone{border:2px dashed var(--neon4);background:#020c14;padding:32px 20px;text-align:center;cursor:pointer;transition:all 0.2s;position:relative;overflow:hidden;}
-  #drop-zone:hover,#drop-zone.drag-over{background:rgba(191,0,255,0.06);box-shadow:inset 0 0 20px rgba(191,0,255,0.1);}
-  #drop-zone .dz-icon{font-size:28px;margin-bottom:8px;display:block;color:var(--neon4);text-shadow:var(--glow4);}
+  .divider{display:flex;align-items:center;gap:12px;margin:6px 0 14px;color:var(--dim);font-size:9px;letter-spacing:3px;}
+  .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
+
+  /* Drop zone */
+  #drop-zone{border:2px dashed var(--neon4);background:#020c14;padding:28px 20px;text-align:center;cursor:pointer;transition:all 0.2s;position:relative;overflow:hidden;}
+  #drop-zone:hover,#drop-zone.drag-over{background:rgba(191,0,255,0.06);}
+  #drop-zone .dz-icon{font-size:24px;margin-bottom:6px;display:block;color:var(--neon4);text-shadow:var(--glow4);}
   #drop-zone .dz-text{font-size:11px;letter-spacing:3px;color:var(--neon4);}
-  #drop-zone .dz-sub{font-size:9px;letter-spacing:2px;color:var(--dim);margin-top:6px;}
+  #drop-zone .dz-sub{font-size:9px;letter-spacing:2px;color:var(--dim);margin-top:5px;}
   #file-input{display:none;}
+  @keyframes scanline{0%{top:-100%}100%{top:100%}}
   #drop-zone::after{content:'';position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--neon4),transparent);animation:scanline 2s linear infinite;opacity:0.5;}
-  #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#050f1a;border:1px solid var(--neon);color:var(--neon);font-family:'Orbitron',monospace;font-size:10px;letter-spacing:2px;padding:10px 24px;text-shadow:var(--glow);box-shadow:var(--glow);opacity:0;transition:opacity 0.3s;pointer-events:none;z-index:999;white-space:nowrap;}
+
+  /* ── SPLIT DECRYPT VIEW ── */
+  #decrypt-split{display:none;margin-top:2px;}
+
+  /* Top half: figures stage */
+  .split-top{
+    background:#020c14;
+    border:1px solid var(--neon4);
+    border-bottom:none;
+    padding:16px;
+    min-height:140px;
+    position:relative;
+    overflow:hidden;
+  }
+  .split-top-label{
+    font-size:8px;letter-spacing:3px;color:var(--neon4);
+    text-shadow:var(--glow4);margin-bottom:10px;
+  }
+  #decrypt-figures-row{
+    display:flex;flex-wrap:wrap;gap:6px;align-items:flex-end;min-height:80px;
+  }
+
+  /* Divider bar */
+  .split-divider{
+    background:var(--neon4);height:2px;
+    box-shadow:var(--glow4);
+    position:relative;
+  }
+  .split-divider::before{
+    content:'◆ DECRYPTING ◆';
+    position:absolute;left:50%;transform:translateX(-50%) translateY(-50%);
+    background:var(--panel);padding:0 12px;
+    font-family:'Orbitron',monospace;font-size:8px;letter-spacing:3px;
+    color:var(--neon4);text-shadow:var(--glow4);white-space:nowrap;
+  }
+  .split-divider.done::before{content:'◆ DECRYPTED ◆';}
+
+  /* Bottom half: English text stage */
+  .split-bottom{
+    background:#020c14;
+    border:1px solid var(--neon4);
+    border-top:none;
+    padding:20px 18px;
+    min-height:120px;
+    position:relative;
+    display:flex;align-items:center;justify-content:center;
+  }
+  #decoded-sentence{
+    font-family:'Orbitron',monospace;
+    font-size:16px;font-weight:700;
+    color:var(--neon3);
+    text-shadow:var(--glow3);
+    letter-spacing:3px;
+    text-align:center;
+    line-height:1.8;
+    word-break:break-word;
+    width:100%;
+  }
+  #decoded-cursor{
+    display:inline-block;width:2px;height:18px;
+    background:var(--neon3);vertical-align:middle;
+    animation:blink 0.7s step-end infinite;
+    box-shadow:var(--glow3);margin-left:3px;
+  }
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+  /* Figure entrance animation */
+  @keyframes figIn{
+    0%  {opacity:0;transform:translateY(-16px) scale(0.7) rotate(-20deg);}
+    60% {opacity:1;transform:translateY(3px)   scale(1.1) rotate(4deg);}
+    80% {transform:translateY(-2px) scale(0.97) rotate(-1deg);}
+    100%{opacity:1;transform:translateY(0)     scale(1)   rotate(0deg);}
+  }
+  .fig-enter{animation:figIn 0.35s cubic-bezier(0.34,1.56,0.64,1) forwards;}
+
+  /* Char reveal in text */
+  @keyframes charIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .char-span{display:inline;animation:charIn 0.2s ease forwards;}
+
+  #toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#050f1a;border:1px solid var(--neon);color:var(--neon);font-family:'Orbitron',monospace;font-size:10px;letter-spacing:2px;padding:9px 22px;text-shadow:var(--glow);box-shadow:var(--glow);opacity:0;transition:opacity 0.3s;pointer-events:none;z-index:999;white-space:nowrap;}
   #toast.show{opacity:1;}
   #toast.purple{border-color:var(--neon4);color:var(--neon4);text-shadow:var(--glow4);box-shadow:var(--glow4);}
   #toast.red{border-color:var(--neon2);color:var(--neon2);text-shadow:var(--glow2);box-shadow:var(--glow2);}
-  .divider{display:flex;align-items:center;gap:12px;margin:8px 0 16px;color:var(--dim);font-size:9px;letter-spacing:3px;}
-  .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
+
+  @keyframes flicker{0%,100%{opacity:1}92%,96%{opacity:0.4}}
+  .glitch{animation:flicker 8s infinite;}
 </style>
 
 <div id="app">
   <div class="container">
+
     <div class="header glitch">
       <div class="header-badge">⬡ CLASSIFIED CIPHER SYSTEM ⬡</div>
       <h1>DANCING MEN</h1>
       <div class="header-sub">HOLMES CRYPTOGRAPHIC PROTOCOL · EST. 1903</div>
     </div>
 
+    <!-- ENCRYPT INPUT -->
     <div class="panel">
       <span class="panel-label">▶ ENCRYPT — INPUT CHANNEL</span>
       <div class="corner-tl"></div><div class="corner-tr"></div><div class="corner-bl"></div><div class="corner-br"></div>
@@ -99,36 +175,38 @@
       <div class="status-bar">
         <span><span class="status-dot"></span>CHANNEL ACTIVE</span>
         <span id="char-count">0 CHARS</span>
-        <span id="mode-label">ENCRYPT MODE</span>
       </div>
     </div>
 
+    <!-- ENCRYPT OUTPUT -->
     <div class="panel">
       <span class="panel-label">TRANSMISSION OUTPUT</span>
       <div class="corner-tl"></div><div class="corner-tr"></div><div class="corner-bl"></div><div class="corner-br"></div>
       <div class="panel-body" style="padding:12px">
-        <div id="output-area">
-          <div class="output-placeholder" id="placeholder">// AWAITING TRANSMISSION //</div>
+        <div id="output-area" style="min-height:100px;background:#020c14;border:1px solid var(--dim);padding:12px;">
+          <div id="placeholder" style="color:var(--dim);font-size:11px;letter-spacing:2px;text-align:center;padding-top:28px;">// AWAITING TRANSMISSION //</div>
           <div class="figures-row" id="figures-row" style="display:none"></div>
         </div>
       </div>
       <div class="status-bar">
         <span id="out-info">NO OUTPUT</span>
         <span id="out-chars"></span>
-        <div style="display:flex;gap:8px;align-items:center">
-          <button class="btn btn-yellow" id="export-json-btn" onclick="exportJSON()" style="display:none;height:26px;font-size:8px;padding:0 12px">⬇ EXPORT .JSON</button>
-          <button class="btn" id="export-png-btn" onclick="exportPNG()" style="display:none;height:26px;font-size:8px;padding:0 12px">⬇ EXPORT PNG</button>
+        <div style="display:flex;gap:7px">
+          <button class="btn btn-yellow" id="export-json-btn" onclick="exportJSON()" style="display:none;height:26px;font-size:8px;padding:0 11px">⬇ EXPORT .JSON</button>
+          <button class="btn" id="export-png-btn" onclick="exportPNG()" style="display:none;height:26px;font-size:8px;padding:0 11px">⬇ PNG</button>
         </div>
       </div>
     </div>
 
     <div class="divider">◆ DECRYPT PROTOCOL ◆</div>
 
-    <div class="panel decrypt-panel">
+    <!-- DECRYPT DROPZONE -->
+    <div class="panel dec">
       <span class="panel-label">◀ DECRYPT — LOAD TRANSMISSION FILE</span>
       <div class="corner-tl"></div><div class="corner-tr"></div><div class="corner-bl"></div><div class="corner-br"></div>
-      <div class="panel-body" style="padding:14px">
-        <div id="drop-zone" onclick="document.getElementById('file-input').click()"
+      <div class="panel-body" style="padding:12px">
+        <div id="drop-zone"
+          onclick="document.getElementById('file-input').click()"
           ondragover="event.preventDefault();this.classList.add('drag-over')"
           ondragleave="this.classList.remove('drag-over')"
           ondrop="handleDrop(event)">
@@ -139,34 +217,44 @@
         <input type="file" id="file-input" accept=".json" onchange="handleFile(event)"/>
       </div>
       <div class="status-bar">
-        <span><span class="status-dot purple"></span>DECRYPT CHANNEL READY</span>
+        <span><span class="status-dot purple"></span>DECRYPT READY</span>
         <span id="decrypt-status">NO FILE LOADED</span>
-        <button class="btn btn-red" id="decrypt-clear-btn" onclick="clearDecrypt()" style="display:none;height:26px;font-size:8px;padding:0 12px">CLEAR</button>
+        <button class="btn btn-red" id="decrypt-clear-btn" onclick="clearDecrypt()" style="display:none;height:26px;font-size:8px;padding:0 11px">CLEAR</button>
       </div>
     </div>
 
-    <div class="panel decrypt-panel" id="decrypt-output-panel" style="display:none">
-      <span class="panel-label">DECRYPTION SEQUENCE</span>
-      <div class="corner-tl"></div><div class="corner-tr"></div><div class="corner-bl"></div><div class="corner-br"></div>
-      <div class="panel-body" style="padding:12px">
-        <div id="decrypt-output-area">
-          <div class="figures-row" id="decrypt-figures-row"></div>
-          <div id="decoded-sentence"></div>
-        </div>
+    <!-- ── SPLIT DECRYPT VIEW ── -->
+    <div id="decrypt-split">
+      <!-- TOP: figures -->
+      <div class="split-top">
+        <div class="split-top-label">▶ CIPHER FIGURES — ONE CHARACTER AT A TIME</div>
+        <div id="decrypt-figures-row"></div>
       </div>
-      <div class="status-bar">
-        <span id="decrypt-out-info">DECODING...</span>
-        <span id="decrypt-timestamp"></span>
+
+      <!-- DIVIDER -->
+      <div class="split-divider" id="split-divider"></div>
+
+      <!-- BOTTOM: English text -->
+      <div class="split-bottom">
+        <div id="decoded-sentence"><span id="decoded-cursor"></span></div>
+      </div>
+
+      <!-- status strip -->
+      <div class="status-bar" style="border:1px solid var(--neon4);border-top:none;background:#020c14;">
+        <span id="decrypt-out-info" style="color:var(--neon4)">DECODING...</span>
+        <span id="decrypt-timestamp" style="color:var(--dim)"></span>
       </div>
     </div>
 
-    <div class="panel">
+    <!-- CIPHER KEY -->
+    <div class="panel" style="margin-top:14px">
       <span class="panel-label">CIPHER REFERENCE KEY — CLICK TO INSERT</span>
       <div class="corner-tl"></div><div class="corner-tr"></div><div class="corner-bl"></div><div class="corner-br"></div>
-      <div class="panel-body" style="padding:14px 10px">
+      <div class="panel-body" style="padding:12px 8px">
         <div class="ref-strip" id="ref-strip"></div>
       </div>
     </div>
+
   </div>
 </div>
 
@@ -221,28 +309,23 @@ function drawFigure(letter,isWordEnd,small,dimmed){
     c.setAttribute('cx',W/2);c.setAttribute('cy',H/2);c.setAttribute('r',2);c.setAttribute('fill',NEON_DIM);
     svg.appendChild(c);return svg;
   }
-  const f=FIGS[letter];
-  if(!f)return svg;
-
+  const f=FIGS[letter];if(!f)return svg;
   const cx=W/2,headR=4,headY=6,shoulderY=headY+headR+2,hipY=shoulderY+14,limbLen=10;
 
   const head=document.createElementNS('http://www.w3.org/2000/svg','circle');
   head.setAttribute('cx',cx);head.setAttribute('cy',headY);head.setAttribute('r',headR);head.setAttribute('fill',col);
   svg.appendChild(head);
-
   const body=document.createElementNS('http://www.w3.org/2000/svg','line');
   body.setAttribute('x1',cx);body.setAttribute('y1',shoulderY);body.setAttribute('x2',cx);body.setAttribute('y2',hipY);
   body.setAttribute('stroke',col);body.setAttribute('stroke-width',2);body.setAttribute('stroke-linecap','round');
   svg.appendChild(body);
 
   function addLimb(fromX,fromY,angle,side){
-    const rad=degToRad(angle);
-    const dx=Math.sin(rad)*limbLen*side,dy=Math.cos(rad)*limbLen;
-    const line=document.createElementNS('http://www.w3.org/2000/svg','line');
-    line.setAttribute('x1',fromX);line.setAttribute('y1',fromY);
-    line.setAttribute('x2',fromX+dx);line.setAttribute('y2',fromY+dy);
-    line.setAttribute('stroke',col);line.setAttribute('stroke-width',2);line.setAttribute('stroke-linecap','round');
-    svg.appendChild(line);
+    const rad=degToRad(angle),dx=Math.sin(rad)*limbLen*side,dy=Math.cos(rad)*limbLen;
+    const l=document.createElementNS('http://www.w3.org/2000/svg','line');
+    l.setAttribute('x1',fromX);l.setAttribute('y1',fromY);l.setAttribute('x2',fromX+dx);l.setAttribute('y2',fromY+dy);
+    l.setAttribute('stroke',col);l.setAttribute('stroke-width',2);l.setAttribute('stroke-linecap','round');
+    svg.appendChild(l);
   }
 
   if(f.tpose){
@@ -269,14 +352,11 @@ function drawFigure(letter,isWordEnd,small,dimmed){
   if(isWordEnd){
     const flagX=cx+8,flagY=shoulderY+3;
     const pole=document.createElementNS('http://www.w3.org/2000/svg','line');
-    pole.setAttribute('x1',cx);pole.setAttribute('y1',shoulderY+3);
-    pole.setAttribute('x2',flagX+8);pole.setAttribute('y2',shoulderY+3);
-    pole.setAttribute('stroke',col);pole.setAttribute('stroke-width',1.5);
-    svg.appendChild(pole);
+    pole.setAttribute('x1',cx);pole.setAttribute('y1',shoulderY+3);pole.setAttribute('x2',flagX+8);pole.setAttribute('y2',shoulderY+3);
+    pole.setAttribute('stroke',col);pole.setAttribute('stroke-width',1.5);svg.appendChild(pole);
     const flag=document.createElementNS('http://www.w3.org/2000/svg','polygon');
     flag.setAttribute('points',`${flagX+8},${flagY-5} ${flagX+16},${flagY} ${flagX+8},${flagY+5}`);
-    flag.setAttribute('fill',FLAG);
-    svg.appendChild(flag);
+    flag.setAttribute('fill',FLAG);svg.appendChild(flag);
   }
   return svg;
 }
@@ -284,8 +364,7 @@ function drawFigure(letter,isWordEnd,small,dimmed){
 function buildRef(){
   const strip=document.getElementById('ref-strip');
   'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(ch=>{
-    const cell=document.createElement('div');
-    cell.className='ref-cell';cell.title=ch;
+    const cell=document.createElement('div');cell.className='ref-cell';cell.title=ch;
     cell.appendChild(drawFigure(ch,false,true,false));
     const lbl=document.createElement('div');lbl.className='ref-lbl';lbl.textContent=ch;
     cell.appendChild(lbl);
@@ -295,19 +374,13 @@ function buildRef(){
 }
 
 function getWordEnds(upper){
-  const wordEnds=new Set();
-  let idx=0;
-  upper.split(' ').forEach(w=>{
-    idx+=w.length;
-    if(idx>0&&idx<=upper.length)wordEnds.add(idx-1);
-    idx++;
-  });
+  const wordEnds=new Set();let idx=0;
+  upper.split(' ').forEach(w=>{idx+=w.length;if(idx>0&&idx<=upper.length)wordEnds.add(idx-1);idx++;});
   return wordEnds;
 }
 
 function onInput(){
-  const val=document.getElementById('input-text').value;
-  document.getElementById('char-count').textContent=val.length+' CHARS';
+  document.getElementById('char-count').textContent=document.getElementById('input-text').value.length+' CHARS';
   process();
 }
 
@@ -333,7 +406,6 @@ function process(){
     } else if(FIGS[ch]!==undefined){
       cell.appendChild(drawFigure(ch,wordEnds.has(i),false,false));count++;
     } else {
-      // Non-alphabet character: skip silently (punctuation, accents, etc.)
       const u=document.createElement('div');
       u.style.cssText=`width:${W}px;height:${H}px;display:flex;align-items:center;justify-content:center;color:#2a4a5a;font-size:10px`;
       u.textContent='·';cell.appendChild(u);
@@ -361,46 +433,31 @@ function clearAll(){
   clearOutput();
 }
 
-// ── Safe base64 that handles any Unicode ──
 function safeB64(str){
   return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,(_,p1)=>String.fromCharCode(parseInt(p1,16))));
 }
-
-// ── Sanitise: strip non-Latin1 chars (curly quotes, em-dashes, etc.) ──
 function sanitise(str){
-  // Normalise common Unicode punctuation to ASCII equivalents
   return str
-    .replace(/[\u2018\u2019\u201A\u201B\u2032\u2035]/g,"'")   // smart single quotes -> '
-    .replace(/[\u201C\u201D\u201E\u201F\u2033\u2036]/g,'"')   // smart double quotes -> "
-    .replace(/[\u2013\u2014]/g,'-')                            // en/em dash -> -
-    .replace(/[\u2026]/g,'...')                                // ellipsis -> ...
-    .replace(/[^\x00-\xFF]/g,'');                              // drop anything else outside Latin1
+    .replace(/[\u2018\u2019\u201A\u201B\u2032\u2035]/g,"'")
+    .replace(/[\u201C\u201D\u201E\u201F\u2033\u2036]/g,'"')
+    .replace(/[\u2013\u2014]/g,'-')
+    .replace(/[\u2026]/g,'...')
+    .replace(/[^\x00-\xFF]/g,'');
 }
 
-// ── JSON EXPORT ──
 function exportJSON(){
   const raw=document.getElementById('input-text').value;
   if(!raw.trim())return;
-
   const sanitised=sanitise(raw);
   const upper=sanitised.toUpperCase();
   const wordEnds=getWordEnds(upper);
   const seed=Date.now();
-
   const chars=upper.split('').map((ch,i)=>{
-    const code=ch.charCodeAt(0); // safe: all chars now within 0-255
+    const code=ch.charCodeAt(0);
     const noise=Math.floor(Math.random()*9000)+1000;
-    return{
-      v: code^((seed>>i%8)&0xFF),
-      n: noise,
-      w: wordEnds.has(i)?1:0,
-      t: (i*37+noise)%256
-    };
+    return{v:code^((seed>>i%8)&0xFF),n:noise,w:wordEnds.has(i)?1:0,t:(i*37+noise)%256};
   });
-
-  // safeB64 is now safe since sanitised string is Latin1-clean
   const sigSource=upper.split('').reverse().join('').substring(0,64);
-
   const payload={
     protocol:'HOLMES-DANCING-MEN-v1',
     timestamp:new Date().toISOString(),
@@ -412,7 +469,6 @@ function exportJSON(){
     matrix:Array.from({length:4},()=>Array.from({length:4},()=>Math.floor(Math.random()*256))),
     sig:safeB64(sigSource)
   };
-
   const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
   const a=document.createElement('a');
   a.href=URL.createObjectURL(blob);
@@ -421,18 +477,12 @@ function exportJSON(){
   showToast('⬡ TRANSMISSION FILE EXPORTED ⬡','neon');
 }
 
-// ── DECRYPT ──
 function handleDrop(e){
   e.preventDefault();
   document.getElementById('drop-zone').classList.remove('drag-over');
-  const file=e.dataTransfer.files[0];
-  if(file)readFile(file);
+  const file=e.dataTransfer.files[0];if(file)readFile(file);
 }
-
-function handleFile(e){
-  const file=e.target.files[0];
-  if(file)readFile(file);
-}
+function handleFile(e){const file=e.target.files[0];if(file)readFile(file);}
 
 function readFile(file){
   if(!file.name.endsWith('.json')){showToast('⬡ INVALID FILE FORMAT ⬡','red');return;}
@@ -440,93 +490,108 @@ function readFile(file){
   reader.onload=ev=>{
     try{
       const data=JSON.parse(ev.target.result);
-      if(data.protocol!=='HOLMES-DANCING-MEN-v1')throw new Error('Invalid protocol');
+      if(data.protocol!=='HOLMES-DANCING-MEN-v1')throw new Error('bad protocol');
       decryptTransmission(data,file.name);
-    }catch(err){
-      showToast('⬡ CORRUPTED TRANSMISSION ⬡','red');
-    }
+    }catch(err){showToast('⬡ CORRUPTED TRANSMISSION ⬡','red');}
   };
   reader.readAsText(file);
 }
 
-async function decryptTransmission(data,filename){
-  const seed=parseInt(data.session,16);
-  const decoded=data.transmission.map((item,i)=>{
-    const code=item.v^((seed>>i%8)&0xFF);
-    return{ch:String.fromCharCode(code),w:item.w};
-  });
+let decryptRunning=false;
 
+async function decryptTransmission(data,filename){
+  if(decryptRunning)return;
+  decryptRunning=true;
+
+  const seed=parseInt(data.session,16);
+  const decoded=data.transmission.map((item,i)=>({
+    ch:String.fromCharCode(item.v^((seed>>i%8)&0xFF)),
+    w:item.w
+  }));
+
+  // Show split view
+  const splitEl=document.getElementById('decrypt-split');
+  splitEl.style.display='block';
   document.getElementById('decrypt-status').textContent=filename.toUpperCase();
   document.getElementById('decrypt-clear-btn').style.display='block';
-  document.getElementById('decrypt-output-panel').style.display='block';
   document.getElementById('decrypt-out-info').textContent='DECODING SEQUENCE...';
   document.getElementById('decrypt-timestamp').textContent=new Date(data.timestamp).toLocaleString().toUpperCase();
+  document.getElementById('split-divider').classList.remove('done');
 
-  const row=document.getElementById('decrypt-figures-row');
-  const sentence=document.getElementById('decoded-sentence');
-  row.innerHTML='';sentence.textContent='';
+  const figRow=document.getElementById('decrypt-figures-row');
+  const sentenceEl=document.getElementById('decoded-sentence');
+  const cursorEl=document.getElementById('decoded-cursor');
+  figRow.innerHTML='';
+  sentenceEl.innerHTML='';
+  sentenceEl.appendChild(cursorEl);
 
-  const cells=[];
-  decoded.forEach(({ch,w})=>{
+  // Animate characters one by one
+  let builtText='';
+
+  for(let i=0;i<decoded.length;i++){
+    const {ch,w}=decoded[i];
+    await new Promise(r=>setTimeout(r,110));
+
+    // ── TOP: add figure with bounce-in animation ──
     const cell=document.createElement('div');
     cell.className='figure-cell';
-    cell.style.paddingTop='22px';
+
     if(ch===' '){
       const s=document.createElement('div');
-      s.style.cssText=`width:12px;height:${H}px;display:flex;align-items:center;justify-content:center`;
-      const dot=document.createElementNS('http://www.w3.org/2000/svg','svg');
-      dot.setAttribute('width','8');dot.setAttribute('height',H);dot.setAttribute('viewBox',`0 0 8 ${H}`);
-      const c=document.createElementNS('http://www.w3.org/2000/svg','circle');
-      c.setAttribute('cx','4');c.setAttribute('cy',H/2);c.setAttribute('r','2');c.setAttribute('fill',NEON_DIM);
-      dot.appendChild(c);s.appendChild(dot);cell.appendChild(s);
+      s.style.cssText=`width:12px;height:${H}px;`;
+      cell.appendChild(s);
       cell._isSpace=true;
     } else if(FIGS[ch]!==undefined){
-      const fig=drawFigure(ch,w===1,false,true);
+      const fig=drawFigure(ch,w===1,false,false);
+      fig.classList.add('fig-enter');
       cell.appendChild(fig);
-      cell._ch=ch;cell._w=w;
     } else {
-      // Unknown decoded char — show placeholder
       const u=document.createElement('div');
       u.style.cssText=`width:${W}px;height:${H}px;display:flex;align-items:center;justify-content:center;color:#2a4a5a;font-size:10px`;
       u.textContent='·';cell.appendChild(u);
-      cell._ch=ch;cell._unknown=true;
     }
-    row.appendChild(cell);
-    cells.push(cell);
-  });
+    figRow.appendChild(cell);
 
-  let revealedText='';
-  for(let i=0;i<cells.length;i++){
-    const cell=cells[i];
-    await new Promise(r=>setTimeout(r,120));
-    if(cell._isSpace){revealedText+=' ';sentence.textContent=revealedText;continue;}
-    if(!cell._ch)continue;
-    if(!cell._unknown){
-      cell.innerHTML='';
-      const bright=drawFigure(cell._ch,cell._w===1,false,false);
-      cell.appendChild(bright);
-      const badge=document.createElement('div');
-      badge.className='reveal-badge';badge.textContent=cell._ch;
-      cell.appendChild(badge);
+    // Auto-scroll figures row
+    figRow.scrollLeft=figRow.scrollWidth;
+
+    // ── BOTTOM: append character to sentence ──
+    builtText+=ch;
+    // Rebuild sentence with last char animated
+    sentenceEl.innerHTML='';
+    // Add all previous chars as static spans
+    for(let j=0;j<builtText.length-1;j++){
+      const s=document.createElement('span');
+      s.textContent=builtText[j];
+      sentenceEl.appendChild(s);
     }
-    revealedText+=cell._ch;
-    sentence.textContent=revealedText;
+    // Last char gets animation
+    const newChar=document.createElement('span');
+    newChar.className='char-span';
+    newChar.textContent=ch;
+    sentenceEl.appendChild(newChar);
+    // Blinking cursor at end
+    sentenceEl.appendChild(cursorEl);
   }
 
-  document.getElementById('decrypt-out-info').textContent=decoded.length+' CHARS DECRYPTED';
+  // Done
+  document.getElementById('split-divider').classList.add('done');
+  document.getElementById('decrypt-out-info').textContent=decoded.length+' CHARS DECRYPTED · TRANSMISSION COMPLETE';
   showToast('⬡ TRANSMISSION DECRYPTED ⬡','purple');
+  decryptRunning=false;
 }
 
 function clearDecrypt(){
-  document.getElementById('decrypt-output-panel').style.display='none';
+  document.getElementById('decrypt-split').style.display='none';
   document.getElementById('decrypt-figures-row').innerHTML='';
-  document.getElementById('decoded-sentence').textContent='';
+  document.getElementById('decoded-sentence').innerHTML='';
+  document.getElementById('decoded-sentence').appendChild(document.getElementById('decoded-cursor'));
   document.getElementById('decrypt-status').textContent='NO FILE LOADED';
   document.getElementById('decrypt-clear-btn').style.display='none';
   document.getElementById('file-input').value='';
+  decryptRunning=false;
 }
 
-// ── PNG EXPORT ──
 async function exportPNG(){
   const figRow=document.getElementById('figures-row');
   const cw=Math.max(figRow.scrollWidth+48,400),ch=figRow.scrollHeight+80;
