@@ -1,4 +1,11 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dancing Men Cipher</title>
+</head>
+<body>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap');
   :root {
@@ -81,7 +88,31 @@
     text-shadow:var(--glow4);margin-bottom:10px;
   }
   #decrypt-figures-row{
-    display:flex;flex-wrap:wrap;gap:6px;align-items:flex-end;min-height:80px;
+    display:flex;flex-wrap:wrap;gap:6px;align-items:flex-end;justify-content:center;
+    min-height:80px;position:relative;
+    padding:8px 0;
+  }
+  .word-figures{
+    display:flex;gap:4px;align-items:flex-end;
+    opacity:0;transform:translateY(10px) scale(0.9);
+    animation:wordGroupIn 0.5s cubic-bezier(0.25,1,0.5,1) forwards;
+  }
+  @keyframes wordGroupIn{
+    0%  {opacity:0;transform:translateY(10px) scale(0.9);}
+    60% {opacity:1;transform:translateY(-2px) scale(1.02);}
+    100%{opacity:1;transform:translateY(0) scale(1);}
+  }
+  .word-figures svg{
+    filter:drop-shadow(0 0 6px var(--neon4)) drop-shadow(0 0 14px rgba(191,0,255,0.25));
+  }
+  .word-figures.past{
+    opacity:0.25;
+    transform:scale(0.85);
+    animation:none;
+    transition:opacity 0.4s ease, transform 0.4s ease;
+  }
+  .word-figures.past svg{
+    filter:none;
   }
 
   /* Divider bar */
@@ -130,16 +161,21 @@
 
   /* Figure entrance animation */
   @keyframes figIn{
-    0%  {opacity:0;transform:translateY(-16px) scale(0.7) rotate(-20deg);}
-    60% {opacity:1;transform:translateY(3px)   scale(1.1) rotate(4deg);}
-    80% {transform:translateY(-2px) scale(0.97) rotate(-1deg);}
+    0%  {opacity:0;transform:translateY(-10px) scale(0.85) rotate(-8deg);}
+    50% {opacity:1;transform:translateY(2px)   scale(1.05) rotate(2deg);}
+    75% {transform:translateY(-1px) scale(0.98) rotate(-0.5deg);}
     100%{opacity:1;transform:translateY(0)     scale(1)   rotate(0deg);}
   }
-  .fig-enter{animation:figIn 0.35s cubic-bezier(0.34,1.56,0.64,1) forwards;}
+  .fig-enter{animation:figIn 0.5s cubic-bezier(0.25,1,0.5,1) forwards;}
 
   /* Char reveal in text */
-  @keyframes charIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-  .char-span{display:inline;animation:charIn 0.2s ease forwards;}
+  @keyframes charIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+  .char-span{display:inline;animation:charIn 0.35s ease forwards;}
+
+  /* Word reveal in text */
+  @keyframes wordIn{from{opacity:0;transform:translateY(6px) scale(0.95)}to{opacity:1;transform:none}}
+  .word-span{display:inline;animation:wordIn 0.4s cubic-bezier(0.25,1,0.5,1) forwards;}
+  .word-past{display:inline;}
 
   #toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#050f1a;border:1px solid var(--neon);color:var(--neon);font-family:'Orbitron',monospace;font-size:10px;letter-spacing:2px;padding:9px 22px;text-shadow:var(--glow);box-shadow:var(--glow);opacity:0;transition:opacity 0.3s;pointer-events:none;z-index:999;white-space:nowrap;}
   #toast.show{opacity:1;}
@@ -148,6 +184,75 @@
 
   @keyframes flicker{0%,100%{opacity:1}92%,96%{opacity:0.4}}
   .glitch{animation:flicker 8s infinite;}
+
+  /* ── RESPONSIVE / ADAPTIVE ── */
+
+  /* Tablet & smaller desktops */
+  @media(max-width:768px){
+    .container{padding:16px 10px;}
+    .header h1{font-size:20px;letter-spacing:4px;}
+    .header-badge{font-size:8px;letter-spacing:3px;padding:3px 10px;}
+    .header-sub{font-size:9px;letter-spacing:2px;}
+    .panel-body{padding:14px 12px 12px;}
+    .ref-cell{padding:2px;}
+    .ref-cell svg{width:22px;height:30px;}
+    .ref-lbl{font-size:7px;}
+    #decoded-sentence{font-size:14px;letter-spacing:2px;}
+    .split-bottom{padding:16px 12px;}
+    .split-top{padding:12px;}
+  }
+
+  /* Mobile phones */
+  @media(max-width:520px){
+    .container{padding:12px 6px;}
+    .header{margin-bottom:16px;}
+    .header h1{font-size:16px;letter-spacing:2px;}
+    .header-badge{font-size:7px;letter-spacing:2px;padding:2px 8px;}
+    .header-sub{font-size:8px;letter-spacing:1.5px;}
+    .panel{margin-bottom:10px;}
+    .panel-body{padding:12px 10px 10px;}
+    .panel-label{font-size:7px;letter-spacing:2px;left:10px;}
+    .input-row{flex-direction:column;gap:8px;}
+    textarea{height:60px;font-size:13px;padding:8px 10px;}
+    .btn-col{flex-direction:row;gap:8px;}
+    .btn-col .btn{flex:1;height:34px;font-size:9px;}
+    .status-bar{padding:5px 10px;font-size:8px;letter-spacing:1.5px;}
+    .status-bar .btn{font-size:7px;padding:0 8px;height:24px;}
+    .figures-row{gap:4px;}
+    .figure-cell svg{width:26px;height:36px;}
+    .ref-strip{gap:1px;}
+    .ref-cell{padding:2px 1px;}
+    .ref-cell svg{width:18px;height:26px;}
+    .ref-lbl{font-size:6px;}
+    .divider{font-size:8px;letter-spacing:2px;margin:4px 0 10px;}
+    #drop-zone{padding:20px 12px;}
+    #drop-zone .dz-icon{font-size:20px;}
+    #drop-zone .dz-text{font-size:10px;letter-spacing:2px;}
+    #drop-zone .dz-sub{font-size:8px;}
+    .split-top{padding:10px;min-height:100px;}
+    .split-top-label{font-size:7px;letter-spacing:2px;}
+    #decrypt-figures-row{min-height:60px;gap:4px;}
+    .word-figures{gap:2px;}
+    .word-figures svg{width:24px;height:34px;}
+    .split-bottom{padding:14px 10px;min-height:80px;}
+    #decoded-sentence{font-size:13px;letter-spacing:1.5px;line-height:1.6;}
+    #decoded-cursor{height:14px;}
+    .split-divider::before{font-size:7px;letter-spacing:2px;padding:0 8px;}
+    #toast{font-size:9px;letter-spacing:1.5px;padding:8px 16px;max-width:90vw;white-space:normal;text-align:center;}
+    #output-area{padding:10px !important;}
+  }
+
+  /* Very small phones */
+  @media(max-width:360px){
+    .header h1{font-size:14px;letter-spacing:1.5px;}
+    .header-badge{font-size:6px;letter-spacing:1.5px;}
+    .ref-cell svg{width:15px;height:22px;}
+    .ref-lbl{font-size:5px;}
+    .figure-cell svg{width:22px;height:30px;}
+    .word-figures svg{width:20px;height:28px;}
+    #decoded-sentence{font-size:11px;letter-spacing:1px;}
+    .btn{font-size:8px;letter-spacing:1px;padding:0 10px;}
+  }
 </style>
 
 <div id="app">
@@ -525,52 +630,89 @@ async function decryptTransmission(data,filename){
   sentenceEl.innerHTML='';
   sentenceEl.appendChild(cursorEl);
 
-  // Animate characters one by one
-  let builtText='';
-
-  for(let i=0;i<decoded.length;i++){
-    const {ch,w}=decoded[i];
-    await new Promise(r=>setTimeout(r,110));
-
-    // ── TOP: add figure with bounce-in animation ──
-    const cell=document.createElement('div');
-    cell.className='figure-cell';
-
-    if(ch===' '){
-      const s=document.createElement('div');
-      s.style.cssText=`width:12px;height:${H}px;`;
-      cell.appendChild(s);
-      cell._isSpace=true;
-    } else if(FIGS[ch]!==undefined){
-      const fig=drawFigure(ch,w===1,false,false);
-      fig.classList.add('fig-enter');
-      cell.appendChild(fig);
+  // Build words from decoded chars
+  const words=[];
+  let currentWord={chars:[],startIdx:0};
+  decoded.forEach((item,i)=>{
+    if(item.ch===' '){
+      if(currentWord.chars.length>0){words.push(currentWord);}
+      words.push({chars:[{ch:' ',w:0}],startIdx:i,isSpace:true});
+      currentWord={chars:[],startIdx:i+1};
     } else {
-      const u=document.createElement('div');
-      u.style.cssText=`width:${W}px;height:${H}px;display:flex;align-items:center;justify-content:center;color:#2a4a5a;font-size:10px`;
-      u.textContent='·';cell.appendChild(u);
+      currentWord.chars.push(item);
     }
-    figRow.appendChild(cell);
+  });
+  if(currentWord.chars.length>0) words.push(currentWord);
+
+  // Helper: build figures group for a word
+  function buildWordFigures(word){
+    const group=document.createElement('div');
+    group.className='word-figures';
+    if(word.isSpace){
+      const spacer=document.createElement('div');
+      spacer.style.cssText=`width:10px;height:${H}px;`;
+      group.appendChild(spacer);
+      group.style.opacity='1';group.style.transform='none';group.style.animation='none';
+      return group;
+    }
+    word.chars.forEach((item,j)=>{
+      const isLastChar=(j===word.chars.length-1);
+      const isWordEnd=item.w===1||isLastChar;
+      if(FIGS[item.ch]!==undefined){
+        const fig=drawFigure(item.ch,isWordEnd&&isLastChar,false,false);
+        fig.classList.add('fig-enter');
+        fig.style.animationDelay=(j*0.07)+'s';
+        group.appendChild(fig);
+      }
+    });
+    return group;
+  }
+
+  // Animate word by word
+  let builtText='';
+  const figGroups=[];
+
+  for(let wi=0;wi<words.length;wi++){
+    const word=words[wi];
+    const wordText=word.chars.map(c=>c.ch).join('');
+
+    // Skip delay for spaces
+    if(!word.isSpace){
+      await new Promise(r=>setTimeout(r,400));
+    } else {
+      await new Promise(r=>setTimeout(r,80));
+    }
+
+    // ── TOP: dim all previous figure groups, add new one ──
+    figGroups.forEach(g=>g.classList.add('past'));
+    const newGroup=buildWordFigures(word);
+    figGroups.push(newGroup);
+    figRow.appendChild(newGroup);
+
+    // Keep only last 3 word-groups visible, hide older ones
+    if(figGroups.length>3){
+      figGroups[figGroups.length-4].style.display='none';
+    }
 
     // Auto-scroll figures row
     figRow.scrollLeft=figRow.scrollWidth;
 
-    // ── BOTTOM: append character to sentence ──
-    builtText+=ch;
-    // Rebuild sentence with last char animated
+    // ── BOTTOM: append word to sentence ──
+    builtText+=wordText;
     sentenceEl.innerHTML='';
-    // Add all previous chars as static spans
-    for(let j=0;j<builtText.length-1;j++){
-      const s=document.createElement('span');
-      s.textContent=builtText[j];
-      sentenceEl.appendChild(s);
+    // Previous words as static text
+    const prevText=builtText.slice(0,-wordText.length);
+    if(prevText){
+      const prev=document.createElement('span');
+      prev.className='word-past';
+      prev.textContent=prevText;
+      sentenceEl.appendChild(prev);
     }
-    // Last char gets animation
-    const newChar=document.createElement('span');
-    newChar.className='char-span';
-    newChar.textContent=ch;
-    sentenceEl.appendChild(newChar);
-    // Blinking cursor at end
+    // Current word animated
+    const wordEl=document.createElement('span');
+    wordEl.className='word-span';
+    wordEl.textContent=wordText;
+    sentenceEl.appendChild(wordEl);
     sentenceEl.appendChild(cursorEl);
   }
 
@@ -633,3 +775,5 @@ function showToast(msg,type){
 
 buildRef();
 </script>
+</body>
+</html>
