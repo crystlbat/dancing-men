@@ -57,6 +57,39 @@
   .ref-cell{display:flex;flex-direction:column;align-items:center;gap:1px;cursor:pointer;padding:3px;border:1px solid transparent;transition:border-color 0.15s;}
   .ref-cell:hover{border-color:var(--neon);background:rgba(0,255,231,0.05);}
   .ref-lbl{font-size:8px;color:var(--neon);font-family:'Share Tech Mono',monospace;letter-spacing:1px;}
+
+  /* ── TAB SYSTEM ── */
+  .tabs-bar{
+    display:flex;gap:0;margin-bottom:18px;
+    border-bottom:2px solid var(--border);
+    position:relative;
+  }
+  .tab-btn{
+    flex:1;
+    font-family:'Orbitron',monospace;font-size:10px;letter-spacing:3px;font-weight:700;
+    padding:12px 16px;
+    background:transparent;border:none;
+    color:var(--dim);cursor:pointer;
+    position:relative;transition:color 0.25s,text-shadow 0.25s;
+    text-align:center;
+  }
+  .tab-btn::after{
+    content:'';position:absolute;left:0;right:0;bottom:-2px;height:2px;
+    background:transparent;transition:background 0.25s,box-shadow 0.25s;
+  }
+  .tab-btn:hover{color:var(--text);}
+  .tab-btn.active-enc{color:var(--neon);text-shadow:var(--glow);}
+  .tab-btn.active-enc::after{background:var(--neon);box-shadow:var(--glow);}
+  .tab-btn.active-dec{color:var(--neon4);text-shadow:var(--glow4);}
+  .tab-btn.active-dec::after{background:var(--neon4);box-shadow:var(--glow4);}
+  .tab-icon{margin-right:6px;font-size:12px;}
+  .tab-content{
+    display:none;
+    animation:tabFadeIn 0.3s ease;
+  }
+  .tab-content.active{display:block;}
+  @keyframes tabFadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
   .divider{display:flex;align-items:center;gap:12px;margin:6px 0 14px;color:var(--dim);font-size:9px;letter-spacing:3px;}
   .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
 
@@ -200,6 +233,7 @@
     #decoded-sentence{font-size:14px;letter-spacing:2px;}
     .split-bottom{padding:16px 12px;}
     .split-top{padding:12px;}
+    .tab-btn{font-size:9px;letter-spacing:2px;padding:10px 12px;}
   }
 
   /* Mobile phones */
@@ -209,6 +243,9 @@
     .header h1{font-size:16px;letter-spacing:2px;}
     .header-badge{font-size:7px;letter-spacing:2px;padding:2px 8px;}
     .header-sub{font-size:8px;letter-spacing:1.5px;}
+    .tab-btn{font-size:8px;letter-spacing:1.5px;padding:9px 8px;}
+    .tab-icon{margin-right:4px;font-size:10px;}
+    .tabs-bar{margin-bottom:12px;}
     .panel{margin-bottom:10px;}
     .panel-body{padding:12px 10px 10px;}
     .panel-label{font-size:7px;letter-spacing:2px;left:10px;}
@@ -264,100 +301,118 @@
       <div class="header-sub">HOLMES CRYPTOGRAPHIC PROTOCOL · EST. 1903</div>
     </div>
 
-    <!-- ENCRYPT INPUT -->
-    <div class="panel">
-      <span class="panel-label">▶ ENCRYPT — INPUT CHANNEL</span>
-      <div class="corner-tl"></div><div class="corner-tr"></div><div class="corner-bl"></div><div class="corner-br"></div>
-      <div class="panel-body">
-        <div class="input-row">
-          <textarea id="input-text" placeholder="ENTER MESSAGE TO ENCRYPT..." spellcheck="false" oninput="onInput()"></textarea>
-          <div class="btn-col">
-            <button class="btn" onclick="process()">ENCODE</button>
-            <button class="btn btn-red" onclick="clearAll()">CLEAR</button>
+    <!-- TAB BAR -->
+    <div class="tabs-bar">
+      <button class="tab-btn active-enc" id="tab-enc-btn" onclick="switchTab('encrypt')">
+        <span class="tab-icon">▶</span>ENCRYPT
+      </button>
+      <button class="tab-btn" id="tab-dec-btn" onclick="switchTab('decrypt')">
+        <span class="tab-icon">◀</span>DECRYPT
+      </button>
+    </div>
+
+    <!-- ═══════ ENCRYPT TAB ═══════ -->
+    <div class="tab-content active" id="tab-encrypt">
+
+      <!-- ENCRYPT INPUT -->
+      <div class="panel">
+        <span class="panel-label">▶ ENCRYPT — INPUT CHANNEL</span>
+        <div class="corner-tl"></div><div class="corner-tr"></div><div class="corner-bl"></div><div class="corner-br"></div>
+        <div class="panel-body">
+          <div class="input-row">
+            <textarea id="input-text" placeholder="ENTER MESSAGE TO ENCRYPT..." spellcheck="false" oninput="onInput()"></textarea>
+            <div class="btn-col">
+              <button class="btn" onclick="process()">ENCODE</button>
+              <button class="btn btn-red" onclick="clearAll()">CLEAR</button>
+            </div>
+          </div>
+        </div>
+        <div class="status-bar">
+          <span><span class="status-dot"></span>CHANNEL ACTIVE</span>
+          <span id="char-count">0 CHARS</span>
+        </div>
+      </div>
+
+      <!-- ENCRYPT OUTPUT -->
+      <div class="panel">
+        <span class="panel-label">TRANSMISSION OUTPUT</span>
+        <div class="corner-tl"></div><div class="corner-tr"></div><div class="corner-bl"></div><div class="corner-br"></div>
+        <div class="panel-body" style="padding:12px">
+          <div id="output-area" style="min-height:100px;background:#020c14;border:1px solid var(--dim);padding:12px;">
+            <div id="placeholder" style="color:var(--dim);font-size:11px;letter-spacing:2px;text-align:center;padding-top:28px;">// AWAITING TRANSMISSION //</div>
+            <div class="figures-row" id="figures-row" style="display:none"></div>
+          </div>
+        </div>
+        <div class="status-bar">
+          <span id="out-info">NO OUTPUT</span>
+          <span id="out-chars"></span>
+          <div style="display:flex;gap:7px">
+            <button class="btn btn-yellow" id="export-json-btn" onclick="exportJSON()" style="display:none;height:26px;font-size:8px;padding:0 11px">⬇ EXPORT .JSON</button>
+            <button class="btn" id="export-png-btn" onclick="exportPNG()" style="display:none;height:26px;font-size:8px;padding:0 11px">⬇ PNG</button>
           </div>
         </div>
       </div>
-      <div class="status-bar">
-        <span><span class="status-dot"></span>CHANNEL ACTIVE</span>
-        <span id="char-count">0 CHARS</span>
-      </div>
-    </div>
 
-    <!-- ENCRYPT OUTPUT -->
-    <div class="panel">
-      <span class="panel-label">TRANSMISSION OUTPUT</span>
-      <div class="corner-tl"></div><div class="corner-tr"></div><div class="corner-bl"></div><div class="corner-br"></div>
-      <div class="panel-body" style="padding:12px">
-        <div id="output-area" style="min-height:100px;background:#020c14;border:1px solid var(--dim);padding:12px;">
-          <div id="placeholder" style="color:var(--dim);font-size:11px;letter-spacing:2px;text-align:center;padding-top:28px;">// AWAITING TRANSMISSION //</div>
-          <div class="figures-row" id="figures-row" style="display:none"></div>
+      <!-- CIPHER KEY -->
+      <div class="panel">
+        <span class="panel-label">CIPHER REFERENCE KEY — CLICK TO INSERT</span>
+        <div class="corner-tl"></div><div class="corner-tr"></div><div class="corner-bl"></div><div class="corner-br"></div>
+        <div class="panel-body" style="padding:12px 8px">
+          <div class="ref-strip" id="ref-strip"></div>
         </div>
       </div>
-      <div class="status-bar">
-        <span id="out-info">NO OUTPUT</span>
-        <span id="out-chars"></span>
-        <div style="display:flex;gap:7px">
-          <button class="btn btn-yellow" id="export-json-btn" onclick="exportJSON()" style="display:none;height:26px;font-size:8px;padding:0 11px">⬇ EXPORT .JSON</button>
-          <button class="btn" id="export-png-btn" onclick="exportPNG()" style="display:none;height:26px;font-size:8px;padding:0 11px">⬇ PNG</button>
+
+    </div>
+
+    <!-- ═══════ DECRYPT TAB ═══════ -->
+    <div class="tab-content" id="tab-decrypt">
+
+      <!-- DECRYPT DROPZONE -->
+      <div class="panel dec">
+        <span class="panel-label">◀ DECRYPT — LOAD TRANSMISSION FILE</span>
+        <div class="corner-tl"></div><div class="corner-tr"></div><div class="corner-bl"></div><div class="corner-br"></div>
+        <div class="panel-body" style="padding:12px">
+          <div id="drop-zone"
+            onclick="document.getElementById('file-input').click()"
+            ondragover="event.preventDefault();this.classList.add('drag-over')"
+            ondragleave="this.classList.remove('drag-over')"
+            ondrop="handleDrop(event)">
+            <span class="dz-icon">⬡</span>
+            <div class="dz-text">DROP TRANSMISSION FILE HERE</div>
+            <div class="dz-sub">OR CLICK TO SELECT · ACCEPTS .JSON</div>
+          </div>
+          <input type="file" id="file-input" accept=".json" onchange="handleFile(event)"/>
+        </div>
+        <div class="status-bar">
+          <span><span class="status-dot purple"></span>DECRYPT READY</span>
+          <span id="decrypt-status">NO FILE LOADED</span>
+          <button class="btn btn-red" id="decrypt-clear-btn" onclick="clearDecrypt()" style="display:none;height:26px;font-size:8px;padding:0 11px">CLEAR</button>
         </div>
       </div>
-    </div>
 
-    <div class="divider">◆ DECRYPT PROTOCOL ◆</div>
-
-    <!-- DECRYPT DROPZONE -->
-    <div class="panel dec">
-      <span class="panel-label">◀ DECRYPT — LOAD TRANSMISSION FILE</span>
-      <div class="corner-tl"></div><div class="corner-tr"></div><div class="corner-bl"></div><div class="corner-br"></div>
-      <div class="panel-body" style="padding:12px">
-        <div id="drop-zone"
-          onclick="document.getElementById('file-input').click()"
-          ondragover="event.preventDefault();this.classList.add('drag-over')"
-          ondragleave="this.classList.remove('drag-over')"
-          ondrop="handleDrop(event)">
-          <span class="dz-icon">⬡</span>
-          <div class="dz-text">DROP TRANSMISSION FILE HERE</div>
-          <div class="dz-sub">OR CLICK TO SELECT · ACCEPTS .JSON</div>
+      <!-- ── SPLIT DECRYPT VIEW ── -->
+      <div id="decrypt-split">
+        <!-- TOP: figures -->
+        <div class="split-top">
+          <div class="split-top-label">▶ CIPHER FIGURES — WORD BY WORD</div>
+          <div id="decrypt-figures-row"></div>
         </div>
-        <input type="file" id="file-input" accept=".json" onchange="handleFile(event)"/>
-      </div>
-      <div class="status-bar">
-        <span><span class="status-dot purple"></span>DECRYPT READY</span>
-        <span id="decrypt-status">NO FILE LOADED</span>
-        <button class="btn btn-red" id="decrypt-clear-btn" onclick="clearDecrypt()" style="display:none;height:26px;font-size:8px;padding:0 11px">CLEAR</button>
-      </div>
-    </div>
 
-    <!-- ── SPLIT DECRYPT VIEW ── -->
-    <div id="decrypt-split">
-      <!-- TOP: figures -->
-      <div class="split-top">
-        <div class="split-top-label">▶ CIPHER FIGURES — ONE CHARACTER AT A TIME</div>
-        <div id="decrypt-figures-row"></div>
-      </div>
+        <!-- DIVIDER -->
+        <div class="split-divider" id="split-divider"></div>
 
-      <!-- DIVIDER -->
-      <div class="split-divider" id="split-divider"></div>
+        <!-- BOTTOM: English text -->
+        <div class="split-bottom">
+          <div id="decoded-sentence"><span id="decoded-cursor"></span></div>
+        </div>
 
-      <!-- BOTTOM: English text -->
-      <div class="split-bottom">
-        <div id="decoded-sentence"><span id="decoded-cursor"></span></div>
+        <!-- status strip -->
+        <div class="status-bar" style="border:1px solid var(--neon4);border-top:none;background:#020c14;">
+          <span id="decrypt-out-info" style="color:var(--neon4)">DECODING...</span>
+          <span id="decrypt-timestamp" style="color:var(--dim)"></span>
+        </div>
       </div>
 
-      <!-- status strip -->
-      <div class="status-bar" style="border:1px solid var(--neon4);border-top:none;background:#020c14;">
-        <span id="decrypt-out-info" style="color:var(--neon4)">DECODING...</span>
-        <span id="decrypt-timestamp" style="color:var(--dim)"></span>
-      </div>
-    </div>
-
-    <!-- CIPHER KEY -->
-    <div class="panel" style="margin-top:14px">
-      <span class="panel-label">CIPHER REFERENCE KEY — CLICK TO INSERT</span>
-      <div class="corner-tl"></div><div class="corner-tr"></div><div class="corner-bl"></div><div class="corner-br"></div>
-      <div class="panel-body" style="padding:12px 8px">
-        <div class="ref-strip" id="ref-strip"></div>
-      </div>
     </div>
 
   </div>
@@ -771,6 +826,24 @@ function showToast(msg,type){
   else if(type==='red')t.classList.add('red');
   t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'),2500);
+}
+
+function switchTab(tab){
+  const encBtn=document.getElementById('tab-enc-btn');
+  const decBtn=document.getElementById('tab-dec-btn');
+  const encTab=document.getElementById('tab-encrypt');
+  const decTab=document.getElementById('tab-decrypt');
+  if(tab==='encrypt'){
+    encBtn.className='tab-btn active-enc';
+    decBtn.className='tab-btn';
+    encTab.classList.add('active');
+    decTab.classList.remove('active');
+  } else {
+    encBtn.className='tab-btn';
+    decBtn.className='tab-btn active-dec';
+    encTab.classList.remove('active');
+    decTab.classList.add('active');
+  }
 }
 
 buildRef();
